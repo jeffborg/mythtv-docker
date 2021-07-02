@@ -17,8 +17,8 @@ fi
 
 # update Mythtv user and group ids
 echo "Update mythtv user and group ids"
-groupmod -g $GROUPID users
-usermod -u $USERID -g $GROUPID mythtv
+groupmod -g $GROUP_ID users
+usermod -u $USER_ID -g $GROUP_ID mythtv
 
 mkdir -p $MYTH_APP_HOME
 chown -R mythtv:mythtv $MYTH_USER_HOME
@@ -94,7 +94,7 @@ if [[ ! -z "$DATABASE_ROOT_FILE" && -f "$DATABASE_ROOT_FILE" ]]; then
 	else
   	echo "Database already exists. FOR BETTER SECURITY, PLEASE REMOVE THE DATABASE ROOT CREDENTIALS FILE!"
 	fi
-else #DATABASE_ROOT_FILE is NOT set, let's validate that the mythtv database exists and we can access it ok 
+else #DATABASE_ROOT_FILE is NOT set or file not found, let's validate that the mythtv database exists and we can access it ok 
   echo "Testing connection to mythtv database with supplied credentials."
   output=$(mysql -s -N -h $DATABASE_HOST -P $DATABASE_PORT -u $DATABASE_USER -p$DATABASE_PWD -e "SELECT schema_name FROM information_schema.schemata WHERE schema_name = '$DATABASE_NAME'" information_schema)
   [[ $? -ne 0 ]] && echo "Database call returned an error. Check stderr for details. Unable to continue. Exiting." && exit 1
