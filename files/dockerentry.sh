@@ -60,7 +60,7 @@ done
 if [ -d "$MYTH_VOLUME/recordings" ]; then
   echo "mythtv folders appear to be set"
 else
-  mkdir -p $MYTH_VOLUME/banners $MYTH_VOLUME/channels $MYTH_VOLUME/coverart  $MYTH_VOLUME/db_backups  $MYTH_VOLUME/fanart  $MYTH_VOLUME/livetv  $MYTH_VOLUME/recordings  $MYTH_VOLUME/screenshots  $MYTH_VOLUME/streaming  $MYTH_VOLUME/trailers  $MYTH_VOLUME/videos
+  mkdir -p $MYTH_VOLUME/banners $MYTH_VOLUME/channels $MYTH_VOLUME/coverart  $MYTH_VOLUME/db_backups  $MYTH_VOLUME/fanart  $MYTH_VOLUME/recordings  $MYTH_VOLUME/screenshots  $MYTH_VOLUME/trailers  $MYTH_VOLUME/videos
 fi
 
 # set permissions for files/folders
@@ -125,8 +125,8 @@ fi
 # setup SSH
 echo "Setting up sshd configuration"
 # remove old X11 Forwarding directive(s) and append the new one
-sed -i '/^\s*ForwardX11/d' /etc/ssh/sshd_config
-echo "ForwardX11 yes" >> /etc/ssh/sshd_config
+sed -i '/^\s*X11Forwarding/d' /etc/ssh/sshd_config
+echo "X11Forwarding yes" >> /etc/ssh/sshd_config
 # remove old Port directive(s) and append the new one
 sed -i '/^\s*Port/d' /etc/ssh/sshd_config
 echo "Port $SSH_PORT" >> /etc/ssh/sshd_config
