@@ -123,7 +123,13 @@ if [ ! -z "$DBBACKUP" ]; then
 fi
 
 # setup SSH
-sed -i -e "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config
+echo "Setting up sshd configuration"
+# remove old X11 Forwarding directive(s) and append the new one
+sed -i '/^\s*ForwardX11/d' /etc/ssh/sshd_config
+echo "ForwardX11 yes" >> /etc/ssh/sshd_config
+# remove old Port directive(s) and append the new one
+sed -i '/^\s*Port/d' /etc/ssh/sshd_config
+echo "Port $SSH_PORT" >> /etc/ssh/sshd_config
 mkdir -p /var/run/sshd
 
 #Bring up the backend
