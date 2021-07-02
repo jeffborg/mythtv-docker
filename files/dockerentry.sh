@@ -53,7 +53,7 @@ cp $MYTH_APP_HOME/config.xml /usr/share/mythtv/config.xml
 
 for f in $MYTH_VOLUME/.mythtv/*.xmltv; do
     [ -e "$f" ] && echo "Copying XMLTV config file that was set in home" && 
-    cp $MYTH_VOLUME/.mythtv/*.xmltv $MYTH_HOME/
+    cp $MYTH_VOLUME/.mythtv/*.xmltv $MYTH_APP_HOME/
     break
 done
 
@@ -67,7 +67,7 @@ fi
 chown -R mythtv:users $MYTH_VOLUME /var/log/mythtv
 
 #persist the channel icons in the external volume
-su mythtv -c "ln -s $MYTH_VOLUME/channels/ $MYTH_HOME/"
+su mythtv -c "ln -s $MYTH_VOLUME/channels/ $MYTH_APP_HOME/"
 
 #database connection and configuration
 echo "Waiting for database to be online..."
