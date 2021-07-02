@@ -124,6 +124,7 @@ fi
 
 # setup SSH
 sed -i -e "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config
+mkdir -p /var/run/sshd
 
 #Bring up the backend
 
