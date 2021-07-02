@@ -67,6 +67,8 @@ RUN	mkdir -p /home/mythtv/.mythtv /var/lib/mythtv /var/log/mythtv && \
 	chmod a+rx /usr/bin/tv_grab_au_file &&\
 # enable apache modules
 	a2enmod headers && \
-	a2enmod auth_digest
+	a2enmod auth_digest &&\
+# set dockerentry script to executable
+	chmod +rx /root/dockerentry.sh
 
 CMD ["/root/dockerentry.sh"]
