@@ -127,6 +127,8 @@ sed -i -e "s/#Port 22/Port $SSH_PORT/" /etc/ssh/sshd_config
 
 #Bring up the backend
 
-
-echo "starting backend"
-exec su - mythtv -c "/usr/bin/mythbackend --syslog local7"
+for retry in $(seq 1 10); do
+  while killall -0 mythtv-setup; do sleep 5; done
+  su mythtv -c /usr/bin/mythbackend || echo Unexpected exit retry=$retry
+  sleep 60
+done
