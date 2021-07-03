@@ -78,7 +78,7 @@ while : ; do
   sleep 2s
 done
 #If DATABASE_ROOT_FILE is set AND credential file exists, check if we need to create the mythtv database
-if [[ ! -z "$DATABASE_ROOT_FILE" && -f "$DATABASE_ROOT_FILE" ]]; then
+if [[  -n "$DATABASE_ROOT_FILE" && -f "$DATABASE_ROOT_FILE" ]]; then
 	echo "Database root credentials provided. Checking if we need to create the $DATABASE_NAME database..."
   read -d '\n' db_rt_user db_rt_pswd < $DATABASE_ROOT_FILE
 	output=$(mysql -s -N -h ${DATABASE_HOST} -P ${DATABASE_PORT} -u ${db_rt_user} -p${db_rt_pswd} -e "SELECT schema_name FROM information_schema.schemata WHERE schema_name = '${DATABASE_NAME}'" information_schema)
