@@ -63,11 +63,14 @@ RUN	mkdir -p /home/mythtv/.mythtv /var/lib/mythtv /var/log/mythtv && \
 	echo "mythtv:mythtv" | chpasswd && \ 
 	usermod -s /bin/bash -d /home/mythtv -a -G users,mythtv mythtv && \
 # setup epg file download script
-	mv /root/tv_grab_au_file /usr/bin/tv_grab_au_file && \
+	mv /root/tv_grab_au_file /usr/bin/ && \
 	chmod a+rx /usr/bin/tv_grab_au_file &&\
 # enable apache modules
 	a2enmod headers && \
 	a2enmod auth_digest &&\
+# hack to stop systemd error msgs from popping up when running mythtv-setup
+	mv -f /root/mythtv-setup.sh /usr/share/mythtv/ && \
+	chmod a+rx /usr/share/mythtv/mythtv-setup.sh &&\
 # set dockerentry script to executable
 	chmod +rx /root/dockerentry.sh
 
