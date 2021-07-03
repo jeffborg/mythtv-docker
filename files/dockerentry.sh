@@ -63,6 +63,10 @@ else
   mkdir -p $MYTH_VOLUME/banners $MYTH_VOLUME/channels $MYTH_VOLUME/coverart  $MYTH_VOLUME/db_backups  $MYTH_VOLUME/fanart  $MYTH_VOLUME/recordings  $MYTH_VOLUME/screenshots  $MYTH_VOLUME/trailers  $MYTH_VOLUME/videos
 fi
 
+if [ ! -f $MYTH_USER_HOME/.Xauthority ]; then
+  touch $MYTH_USER_HOME/.Xauthority && chown mythtv $MYTH_USER_HOME/.Xauthority
+fi
+
 # set permissions for files/folders
 chown -R mythtv:users $MYTH_VOLUME /var/log/mythtv
 
@@ -124,9 +128,12 @@ fi
 
 # setup SSH
 echo "Setting up sshd configuration"
-# remove old X11 Forwarding directive(s) and append the new one
+# remove old X11 Forwarding directive(s) and append the new one (enable X11 forwarding)
 sed -i '/^\s*X11Forwarding/d' /etc/ssh/sshd_config
 echo "X11Forwarding yes" >> /etc/ssh/sshd_config
+# remove old X11UseLocahost directive(s) and append the new one (enable remote connections)
+sed -i '/^\s*X11UseLocalhost/d' /etc/ssh/sshd_config
+echo "X11UseLocalhost no" >> /etc/ssh/sshd_config
 # remove old Port directive(s) and append the new one
 sed -i '/^\s*Port/d' /etc/ssh/sshd_config
 echo "Port $SSH_PORT" >> /etc/ssh/sshd_config
