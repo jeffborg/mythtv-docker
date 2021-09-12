@@ -4,7 +4,7 @@ name: Deploy Docker
 on:
   push: {}
 jobs:
-  build:
+  Deploy:
     strategy:
       matrix:
         mythtv: [ 30, 31, 32 ]
@@ -21,7 +21,6 @@ jobs:
             os: focal
             mythtv_pkg: 2:32.0~master.202109032033.8899ca5fd6~ubuntu20.04.1 
             latest_tag: latest-32
-  Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
