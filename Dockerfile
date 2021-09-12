@@ -1,6 +1,5 @@
-ARG ARCH=
 ARG UBUNTU_BASE=focal
-FROM ${ARCH}ubuntu:${UBUNTU_BASE}
+FROM ubuntu:${UBUNTU_BASE}
 
 # Build arguments
 ARG MYTH_VERSION=31
