@@ -8,6 +8,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        mythtv: [ 30, 31, 32 ]
+        arch:
+          - amd64
+          - arm64
+          - arm
+          - i386
         include:
           - mythtv: 30
             os: bionic
@@ -41,10 +47,11 @@ jobs:
         with:
           context: .
           push: true # Will only build if this is not here
-          platforms: linux/amd64,linux/arm64, linux/arm
+          # platforms: linux/amd64,linux/arm64, linux/arm
+          platforms: linux/${{ matrix.arch }}
           tags: |
-            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.version_tag }}
-            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.latest_tag }}
+            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.arch }}-${{ matrix.version_tag }}
+            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.arch }}-${{ matrix.latest_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
