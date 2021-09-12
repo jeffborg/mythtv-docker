@@ -6,8 +6,8 @@ on:
 jobs:
   Deploy:
     strategy:
+      fail-fast: false
       matrix:
-        mythtv: [ 30, 31, 32 ]
         include:
           - mythtv: 30
             os: bionic
