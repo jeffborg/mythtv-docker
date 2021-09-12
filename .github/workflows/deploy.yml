@@ -48,6 +48,6 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            MYTH_VERSION={{ matrix.mythtv }}
-            UBUNTU_BASE={{ matrix.os }}
-            MYTHTV_VERSION={{ matrix.mythtv_pkg }}
+            MYTH_VERSION=${{ matrix.mythtv }}
+            UBUNTU_BASE=${{ matrix.os }}
+            MYTHTV_VERSION=${{ matrix.mythtv_pkg }}
