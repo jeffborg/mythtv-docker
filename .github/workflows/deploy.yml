@@ -2,7 +2,9 @@ name: Deploy Docker
 
 # Run workflow on tags starting with v (eg. v2, v1.2.0)
 on:
-  push: {}
+  push:
+    branches:
+      - main
 jobs:
   Deploy:
     strategy:
