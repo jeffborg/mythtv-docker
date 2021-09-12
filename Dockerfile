@@ -1,7 +1,10 @@
-FROM ubuntu:focal
+ARG ARCH=
+ARG UBUNTU_BASE=focal
+FROM ${ARCH}ubuntu:${UBUNTU_BASE}
 
 # Build arguments
 ARG MYTH_VERSION=31
+ARG MYTH_PKG_VERSION=2:31.0+fixes.202108081239.5da2523154~ubuntu20.04.1
 
 # Set correct environment variables
 ENV DEBIAN_FRONTEND=noninteractive
@@ -45,8 +48,8 @@ RUN apt-get update -qq && \
 	apt-get update -qq && \
 # packages to install
 	apt-get install -y --no-install-recommends \
-# mythtv backend and utilities
-	mythtv-common mythtv-backend mythweb libmyth-python xmltv mariadb-client \
+# mythtv backend and utilities (mythweb=${MYTH_PKG_VERSION})
+	mythtv-common=${MYTH_PKG_VERSION} mythtv-backend=${MYTH_PKG_VERSION} libmyth-python xmltv mariadb-client \
 # ssh and x11 to enable setup
 	openssh-server x11-utils xauth xterm sudo && \
 # clean up
@@ -66,8 +69,8 @@ RUN	mkdir -p /home/mythtv/.mythtv /var/lib/mythtv /var/log/mythtv && \
 	mv /root/tv_grab_au_file /usr/bin/ && \
 	chmod a+rx /usr/bin/tv_grab_au_file &&\
 # enable apache modules
-	a2enmod headers && \
-	a2enmod auth_digest &&\
+	# a2enmod headers && \
+	# a2enmod auth_digest &&\
 # hack to stop systemd error msgs from popping up when running mythtv-setup
 	mv -f /root/mythtv-setup.sh /usr/share/mythtv/ && \
 	chmod a+rx /usr/share/mythtv/mythtv-setup.sh &&\
