@@ -3,7 +3,7 @@ ARG MYTH_BRANCH=fixes/31
 
 FROM ${BASE_IMAGE} AS deb
 
-COPY apt-assume-yes /etc/apt/apt.conf.d/99apt-assume-yes
+RUN echo 'APT::Get::Assume-Yes "1";' > /etc/apt/apt.conf.d/99apt-assume-yes
 WORKDIR  /build
 
 RUN apt-get update
