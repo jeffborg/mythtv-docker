@@ -12,7 +12,7 @@ jobs:
       matrix:
         base:
           - debian:buster
-          - debian:bullseye
+          - ubuntu:bionic
         mythtv: [ 30, 31, 32 ]
         arch:
           - amd64
@@ -31,8 +31,11 @@ jobs:
             latest_tag: latest-32
           - base: debian:buster
             os_tag: buster
-          - base: debian:bullseye
-            os_tag: bullseye
+          - base: ubuntu:bionic
+            os_tag: bionic
+        exclude:
+          - mythtv: 32
+            base: ubuntu:bionic
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
