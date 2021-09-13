@@ -15,7 +15,6 @@ jobs:
           - amd64
           - arm64
           - arm
-          - i386
         include:
           - mythtv: 30
             os: bionic
@@ -32,9 +31,6 @@ jobs:
             mythtv_pkg: 2:32.0~master.202109032033.8899ca5fd6~ubuntu20.04.1 
             latest_tag: latest-32
             version_tag: 32.0.202109032033.8899ca5fd6
-        exclude:
-          - os: bionic
-            arch: i386
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
