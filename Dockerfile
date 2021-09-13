@@ -1,7 +1,7 @@
 ARG BASE_IMAGE=debian:buster
-ARG MYTH_BRANCH=fixes/31
-
 FROM ${BASE_IMAGE} AS deb
+
+ARG MYTH_BRANCH=fixes/31
 
 RUN echo 'APT::Get::Assume-Yes "1";' > /etc/apt/apt.conf.d/99apt-assume-yes
 WORKDIR  /build
@@ -72,9 +72,9 @@ RUN apt-get update -qq && \
 # set the locale
 	locale-gen ${LANG} && \
 # prepare apt 
-	apt-get install -y software-properties-common --no-install-recommends && \
-	apt-add-repository ppa:mythbuntu/$MYTH_VERSION -y && \
-	apt-get update -qq  && \
+	# apt-get install -y software-properties-common --no-install-recommends && \
+	# apt-add-repository ppa:mythbuntu/$MYTH_VERSION -y && \
+	# apt-get update -qq  && \
 # packages to install
 	apt-get install -y --no-install-recommends \
 # mythtv backend and utilities (mythweb=${MYTH_PKG_VERSION}) mythtv-common=${MYTH_PKG_VERSION}   libmyth-python
