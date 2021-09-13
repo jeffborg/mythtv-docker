@@ -19,6 +19,7 @@ WORKDIR  /build/packaging/deb
 
 # need to set this other 31 and master builds fail
 ENV root=
+ENV USER=mythtv-docker
 
 RUN ./build-debs.sh ${MYTH_BRANCH}
 
