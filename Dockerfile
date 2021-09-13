@@ -44,11 +44,11 @@ RUN apt-get update -qq && \
 # prepare apt 
 	apt-get install -y software-properties-common --no-install-recommends && \
 	apt-add-repository ppa:mythbuntu/$MYTH_VERSION -y && \
-	apt-get update -qq && \
+	apt-get update -qq  && \
 # packages to install
 	apt-get install -y --no-install-recommends \
-# mythtv backend and utilities (mythweb=${MYTH_PKG_VERSION})
-	mythtv-common=${MYTH_PKG_VERSION} mythtv-backend=${MYTH_PKG_VERSION} libmyth-python xmltv mariadb-client \
+# mythtv backend and utilities (mythweb=${MYTH_PKG_VERSION}) mythtv-common=${MYTH_PKG_VERSION}   libmyth-python
+	mythtv-backend=${MYTH_PKG_VERSION} xmltv mariadb-client \
 # ssh and x11 to enable setup
 	openssh-server x11-utils xauth xterm sudo && \
 # clean up
