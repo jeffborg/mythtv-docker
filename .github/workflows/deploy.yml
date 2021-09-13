@@ -35,7 +35,7 @@ jobs:
             os_tag: bionic
         exclude:
           - mythtv: 32
-            base: ubuntu:bionic
+            base: debian:buster
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
