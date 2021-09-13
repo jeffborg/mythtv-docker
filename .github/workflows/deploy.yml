@@ -10,26 +10,29 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        base:
+          - debian:buster
+          - debian:bullseye
         mythtv: [ 30, 31, 32 ]
         arch:
           - amd64
           - arm64
+          - '386'
+          - arm
         include:
           - mythtv: 30
-            os: bionic
-            mythtv_pkg: 2:30.0+fixes.202103232211.7d297b1fb8~ubuntu18.04.1
+            branch: fixes/30
             latest_tag: latest-30
-            version_tag: 30.0.202103232211.7d297b1fb8
           - mythtv: 31
-            os: focal
-            mythtv_pkg: 2:31.0+fixes.202108081239.5da2523154~ubuntu20.04.1
+            branch: fixes/31
             latest_tag: latest
-            version_tag: 31.0.202108081239.5da2523154
           - mythtv: 32
-            os: focal
-            mythtv_pkg: 2:32.0~master.202109032033.8899ca5fd6~ubuntu20.04.1 
+            branch: master
             latest_tag: latest-32
-            version_tag: 32.0.202109032033.8899ca5fd6
+          - base: debian:buster
+            os_tag: buster
+          - base: debian:bullseye
+            os_tag: bullseye
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -52,11 +55,10 @@ jobs:
           # platforms: linux/amd64,linux/arm64, linux/arm
           platforms: linux/${{ matrix.arch }}
           tags: |
-            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.arch }}-${{ matrix.version_tag }}
-            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.arch }}-${{ matrix.latest_tag }}
+            ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.arch }}-${{ matrix.os_tag }}-${{ matrix.latest_tag }}
+          # ghcr.io/${{ github.repository_owner }}/mythtv:${{ matrix.arch }}-${{ matrix.latest_tag }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
           build-args: |
-            MYTH_VERSION=${{ matrix.mythtv }}
-            UBUNTU_BASE=${{ matrix.os }}
-            MYTH_PKG_VERSION=${{ matrix.mythtv_pkg }}
+            BASE_IMAGE=${{ matrix.base }}
+            MYTH_BRANCH=${{ matrix.branch }}
