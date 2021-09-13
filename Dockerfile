@@ -17,6 +17,9 @@ RUN git clone https://github.com/MythTV/packaging.git -b ${MYTH_BRANCH}
 
 WORKDIR  /build/packaging/deb
 
+# need to set this other 31 and master builds fail
+ENV root=
+
 RUN ./build-debs.sh ${MYTH_BRANCH}
 
 WORKDIR /debs
