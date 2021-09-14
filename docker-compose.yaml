@@ -2,10 +2,10 @@ version: "3.9"
 services:
   mythtv-backend:
     # image: ghcr.io/jeffborg/mythtv:amd64-buster-latest-30
-    # image: mythtv30
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
+    image: mythtv
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.backend
     hostname: master-backend
     environment:
       DATABASE_HOST: mariadb
@@ -23,10 +23,10 @@ services:
       - 6544:6544
   mythtv-backend-slave:
     # image: ghcr.io/jeffborg/mythtv:amd64-buster-latest-30
-    # image: mythtv30
-    build:
-      context: .
-      dockerfile: Dockerfile.backend
+    image: mythtv
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.backend
     hostname: slave-backend
     environment:
       DATABASE_HOST: mariadb
@@ -58,11 +58,11 @@ services:
     ports:
       - 9000:8080
   mythweb:
-    build:
-      context: .
-      dockerfile: Dockerfile.mythweb
+    # build:
+    #   context: .
+    #   dockerfile: Dockerfile.mythweb
     hostname: mythweb-host
-    # image: mythweb
+    image: mythweb
     ports:
       - 9999:80
     volumes:
