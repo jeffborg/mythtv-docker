@@ -8,7 +8,7 @@ image:
   repository: ghcr.io/jeffborg/mythtv-backend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: main-20210914-90b1f81-30
+  tag: main-20210914-7fc91ed-30
 
 controller:
   type: statefulset
@@ -40,7 +40,7 @@ mythweb:
     repository: ghcr.io/jeffborg/mythtv-web
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: main-20210914-90b1f81-30
+    tag: main-20210914-7fc91ed-30
   service:
     main:
       ports:
