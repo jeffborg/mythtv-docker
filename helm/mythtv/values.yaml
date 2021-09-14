@@ -1,0 +1,97 @@
+# Default values for mythtv.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: ghcr.io/jeffborg/mythtv-backend
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: main-20210914-90b1f81-30
+
+controller:
+  type: statefulset
+
+service:
+  main:
+    ports:
+      http:
+        port: 6544
+        primary: true
+        protocol: HTTP
+      mythtv:
+        enabled: true
+        port: 6543
+        protocol: TCP
+
+ingress:
+  main:
+    enabled: true
+# common: {}
+
+env:
+  DATABASE_HOST: '{{ .Release.Name }}-mariadb'
+  DATABASE_NAME: mythconverg
+  DATABASE_USER: mythtv
+
+mythweb:
+  image:
+    repository: ghcr.io/jeffborg/mythtv-web
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: main-20210914-90b1f81-30
+  service:
+    main:
+      ports:
+        http:
+          port: 80
+  ingress:
+    main:
+      enabled: true
+  secret:
+    DATABASE_PWD: mythtv
+  env:
+    DATABASE_HOST: '{{ .Release.Name }}-mariadb'
+    DATABASE_NAME: mythconverg
+    DATABASE_USER: mythtv
+  mythtv:
+    mountPath: /var/lib/mythtv
+    accessMode: ReadWriteMany
+    size: 1Gi
+
+mariadb:
+  enabled: true
+  image:
+    repository: mariadb    
+  controller:
+    type: statefulset
+  env:
+    MYSQL_DATABASE: mythconverg
+    MYSQL_USER: mythtv
+    MARIADB_RANDOM_ROOT_PASSWORD: yes
+  secret:
+    MYSQL_PASSWORD: mythtv
+  persistence:
+    data:
+      mountPath: /var/lib/mysql
+      size: 1Gi
+      accessMode: ReadWriteOnce
+
+secret:
+  DATABASE_PWD: mythtv
+
+# mythtv probes
+probes:
+  liveness:
+    enabled: false
+  readiness:
+    enabled: false
+  startup:
+    enabled: false
+
+persistence:
+  mythtv:
+    mountPath: /var/lib/mythtv
+    accessMode: ReadWriteMany
+    size: 1Gi

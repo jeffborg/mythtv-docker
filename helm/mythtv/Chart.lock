@@ -1,0 +1,12 @@
+dependencies:
+- name: common
+  repository: https://library-charts.k8s-at-home.com
+  version: 4.0.0
+- name: mariadb
+  repository: ""
+  version: 0.1.0
+- name: mythweb
+  repository: ""
+  version: 0.1.0
+digest: sha256:6d058d949a38ea6c5ff2adebce6b62bfee26808b1440debb8b160b324e7068f3
+generated: "2021-09-14T19:12:37.003244+10:00"
