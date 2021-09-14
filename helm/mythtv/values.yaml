@@ -55,10 +55,11 @@ mythweb:
     DATABASE_HOST: '{{ .Release.Name }}-mariadb'
     DATABASE_NAME: mythconverg
     DATABASE_USER: mythtv
-  mythtv:
-    mountPath: /var/lib/mythtv
-    accessMode: ReadWriteMany
-    size: 1Gi
+  persistence:
+    mythtv:
+      mountPath: /var/lib/mythtv
+      accessMode: ReadWriteMany
+      size: 1Gi
 
 mariadb:
   enabled: true
