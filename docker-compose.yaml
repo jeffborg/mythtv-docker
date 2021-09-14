@@ -1,0 +1,76 @@
+version: "3.9"
+services:
+  mythtv-backend:
+    # image: ghcr.io/jeffborg/mythtv:amd64-buster-latest-30
+    # image: mythtv30
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    hostname: master-backend
+    environment:
+      DATABASE_HOST: mariadb
+      TZ: Australia/Sydney
+      LC_CTYPE: C.UTF-8
+      LANG: C.UTF-8
+    volumes:
+      - mythtv:/var/lib/mythtv
+      - ./files/mythtv-setup.sh:/usr/share/mythtv/mythtv-setup.sh
+    ports:
+      - 2222:22
+      - 8081:80
+      - 5000:5000
+      - 6543:6543
+      - 6544:6544
+  mythtv-backend-slave:
+    # image: ghcr.io/jeffborg/mythtv:amd64-buster-latest-30
+    # image: mythtv30
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    hostname: slave-backend
+    environment:
+      DATABASE_HOST: mariadb
+      TZ: Australia/Sydney
+      LC_CTYPE: C.UTF-8
+      LANG: C.UTF-8
+    volumes:
+      - mythtv:/var/lib/mythtv
+      - ./files/mythtv-setup.sh:/usr/share/mythtv/mythtv-setup.sh
+    ports:
+      - 2223:22
+      - 8082:80
+      - 5001:5000
+      - 6545:6543
+      - 6546:6544
+  mariadb:
+    image: mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: securePassword
+      MYSQL_DATABASE: mythconverg
+      MYSQL_USER: mythtv
+      MYSQL_PASSWORD: mythtv
+    volumes:
+      - mysql:/var/lib/mysql
+  adminer:
+    image: adminer
+    environment:
+      ADMINER_DEFAULT_SERVER: mariadb
+    ports:
+      - 9000:8080
+  mythweb:
+    build:
+      context: .
+      dockerfile: Dockerfile.mythweb
+    hostname: mythweb-host
+    # image: mythweb
+    ports:
+      - 9999:80
+    volumes:
+      - mythtv:/var/lib/mythtv
+    environment:
+      # DATABASE_ROOT_FILE: /secure
+      DATABASE_HOST: mariadb
+      TZ: Australia/Sydney
+volumes:
+  mythtv: {}
+  mysql: {}
