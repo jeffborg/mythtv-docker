@@ -12,8 +12,7 @@ env:
   # Use docker.io for Docker Hub if empty
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
-  IMAGE_NAME: ${{ github.repository }}
-
+  # IMAGE_NAME: ${{ github.repository_owner }}/mythtv
 
 jobs:
   docker:
@@ -28,7 +27,9 @@ jobs:
           - 30
         include:
           - image: backend
+            image_name: mythtv-backend
           - image: mythweb
+            image_name: mythtv-web
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -55,7 +56,7 @@ jobs:
         with:
           flavor: |
             prefix=${{ matrix.image }}${{ matrix.version }}
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_name }}
 
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v2
