@@ -148,7 +148,7 @@ mkdir -p /var/run/sshd
 for retry in $(seq 1 120); do
   # while mythtv-setup is running sleep
   while killall -0 mythtv-setup.real; do sleep 5; done
-  su mythtv -c '/usr/bin/mythbackend --noupnp' || echo Unexpected exit CODE=$? retry=$retry
+  su mythtv -c '/usr/bin/mythbackend --noupnp'
   rc=$?
   # see https://github.com/MythTV/mythtv/blob/master/mythtv/libs/libmythbase/exitcodes.h for exit codes 138 is not setup
   if [ $rc -eq 138 ]; then
