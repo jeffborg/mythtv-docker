@@ -55,7 +55,9 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           flavor: |
-            prefix=${{ matrix.image }}${{ matrix.version }}
+            suffix=-${{ matrix.version }}
+          tags: |
+            type=sha,enable=true,priority=100,prefix={{branch}}-{{date 'YYYYMMDD'}}-
           images: ${{ env.REGISTRY }}/${{ github.repository_owner }}/${{ matrix.image_name }}
 
       - name: Build and Push Docker Image
