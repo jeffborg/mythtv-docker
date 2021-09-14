@@ -43,12 +43,31 @@ check_groups
 
 #if group membership is okay, go ahead and continue
 if [ "$IGNORE_NOT" = "0" ]; then
-    xterm -title "MythTV Setup Terminal" -e taskset -c 0 /usr/bin/mythtv-setup.real --syslog local7 "$@"
+	RUNNING=$(pidof mythbackend)
+	if [ -n "$RUNNING" ]; then
+		dialog_question "MythTV" "Mythbackend must be closed before continuing.\nIs it OK to close any currently running mythbackend processes?" 2> /dev/null
+		CLOSE_NOT=$?
+	else
+		CLOSE_NOT=0
+	fi
+	if [ "$CLOSE_NOT" = "0" ]; then
+		if [ -n "$RUNNING" ]; then
+        touch ~mythtv/.mythtv/setup_lock
+				kill $RUNNING
+        echo "waiting for mythbackend to exit"
+        while pidof mythbackend; do sleep 5; done
+        echo "mythbackend has exited"
+		fi
+		xterm -title "MythTV Setup Terminal" -e taskset -c 0 /usr/bin/mythtv-setup.real --syslog local7 -w -geometry 1280x720 "$@"
+    # remove lock file
+    rm ~mythtv/.mythtv/setup_lock
 
-    dialog_question "Fill Database?" "Would you like to run mythfilldatabase?" 2> /dev/null
-    DATABASE_NOT=$?
+		dialog_question "Fill Database?" "Would you like to run mythfilldatabase?" 2> /dev/null
+		DATABASE_NOT=$?
 
-    if [ "$DATABASE_NOT" = "0" ]; then
-            xterm -title "Running mythfilldatabase" -e "unset DISPLAY && unset SESSION_MANAGER && mythfilldatabase $mbargs; sleep 3"
-    fi
+		if [ "$DATABASE_NOT" = "0" ]; then
+			xterm -title "Running mythfilldatabase" -e "unset DISPLAY && unset SESSION_MANAGER && mythfilldatabase $mbargs; sleep 3"
+		fi
+	fi
 fi
+
