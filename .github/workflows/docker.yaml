@@ -24,6 +24,8 @@ jobs:
         image:
           - backend
           - mythweb
+        version:
+          - 30
         include:
           - image: backend
           - image: mythweb
@@ -52,7 +54,7 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           flavor: |
-            prefix=${{ matrix.image }}
+            prefix=${{ matrix.image }}${{ matrix.version }}
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
       - name: Build and Push Docker Image
