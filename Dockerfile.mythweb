@@ -49,6 +49,8 @@ RUN apt-get update -qq && \
 # mythtv backend and utilities (mythweb=${MYTH_PKG_VERSION}) mythtv-common=${MYTH_PKG_VERSION}   libmyth-python
 	# mythtv-backend xmltv mariadb-client \
     mythweb && \
+	# required to get download modules to work
+	libcgi-pm-perl libdbi-perl libdbd-mysql-perl && \
 # ssh and x11 to enable setup
 	# openssh-server x11-utils xauth xterm sudo && \
 # clean up
