@@ -6,14 +6,14 @@
 # MYTH_VOLUME=/var/lib/mythtv
 
 # Set timezone
-# echo "Set correct timezone"
-# echo "TZ = $TZ"
-# if [[ $(cat /etc/timezone) != $TZ ]] ; then
-#   echo "Update timezone"
-#   echo $TZ > /etc/timezone && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
-# else
-#   echo "Timezone is already correct"
-# fi
+echo "Set correct timezone"
+echo "TZ = $TZ"
+if [[ $(cat /etc/timezone) != $TZ ]] ; then
+  echo "Update timezone"
+  echo $TZ > /etc/timezone && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && dpkg-reconfigure -f noninteractive tzdata
+else
+  echo "Timezone is already correct"
+fi
 
 # update Mythtv user and group ids
 # echo "Update mythtv user and group ids"
