@@ -36,6 +36,8 @@ env:
   DATABASE_USER: mythtv
 
 mythweb:
+  controller:
+    strategy: RollingUpdate
   image:
     repository: ghcr.io/jeffborg/mythtv-web
     pullPolicy: IfNotPresent
