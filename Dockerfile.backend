@@ -2,9 +2,9 @@ FROM debian:buster
 
 # Set correct environment variables
 ENV DEBIAN_FRONTEND=noninteractive
-# ENV LANG=en_AU.UTF-8
-# ENV LANGUAGE=en_AU:en
-# ENV LC_ALL=en_AU.UTF-8
+ENV LANG=en_AU.UTF-8
+ENV LANGUAGE=en_AU:en
+ENV LC_ALL=en_AU.UTF-8
 ENV TZ="UTC"
 
 # These can be overriden at runtime.
@@ -32,11 +32,11 @@ RUN apt-get update -qq && \
     apt-get update -qq && \
 # add repositories
 # RUN apt-get update -qq && \
-	apt-get install -y tzdata psmisc && \
+	apt-get install -y tzdata psmisc locales && \
 # chfn workaround - Known issue within Dockers
 	ln -s -f /bin/true /usr/bin/chfn && \
 # set the locale
-	# locale-gen ${LANG} && \
+	locale-gen ${LANG} && \
 # prepare apt 
 	# apt-get install -y  --no-install-recommends && \
 	# apt-add-repository ppa:mythbuntu/$MYTH_VERSION -y && \
